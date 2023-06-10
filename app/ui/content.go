@@ -28,6 +28,8 @@ func NewContent() *MyContent {
 	var boxUrl, decodeURIInput, decodeURIComponentInput = group.UrlGroup()
 	// 字符集
 	var boxCharacter, ansiInput, ucs2Input, utf8Input, utf16Input, utf32Input = group.CharacterGroup()
+	// 摩斯密码
+	var boxMorse, morseInput = group.MorseGroup()
 
 	// 重置函数
 	resetInput := func() {
@@ -49,6 +51,8 @@ func NewContent() *MyContent {
 		utf8Input.SetText(str)
 		utf16Input.SetText(str)
 		utf32Input.SetText(str)
+
+		morseInput.SetText(str)
 	}
 
 	// 设置值方法
@@ -97,6 +101,13 @@ func NewContent() *MyContent {
 			base91Input.SetText(base91Value)
 		}
 	}
+	setMorseValue := func(text string) {
+		morseValue, _ := utils.MorseDecode(text)
+
+		if len(morseValue) > 0 {
+			morseInput.SetText(morseValue)
+		}
+	}
 
 	// 提交按钮
 	button := base.Button("一键解码", func() {
@@ -113,7 +124,7 @@ func NewContent() *MyContent {
 
 		if len(text) > 0 {
 			setBaseValue(text)
-
+			setMorseValue(text)
 			if len(urlValue) > 0 {
 				decodeURIInput.SetText(urlValue)
 				decodeURIComponentInput.SetText(urlValue)
@@ -142,11 +153,22 @@ func NewContent() *MyContent {
 	})
 
 	// 填充
-	content.container = container.NewVBox(inputEntry,
+	// 中间滚动部分
+	_content := container.NewVBox(
 		boxBase64,
 		boxUrl,
 		boxCharacter,
 		boxHash,
+		boxMorse,
+		// 添加更多需要滚动的内容
+	)
+
+	scrollContainer := container.NewScroll(_content)
+	// scrollContainer.Resize(fyne.NewSize(1200, 500))
+	scrollContainer.SetMinSize(fyne.NewSize(1200, 480))
+	scrollContainer.Resize(fyne.NewSize(1200, 480))
+	content.container = container.NewVBox(inputEntry,
+		scrollContainer,
 		button)
 
 	return content

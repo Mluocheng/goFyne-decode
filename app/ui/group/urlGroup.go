@@ -22,8 +22,8 @@ type MyUrlGroup struct {
 func UrlGroup() (*fyne.Container, *widget.Entry, *widget.Entry) {
 	line := canvas.NewLine(color.White)
 	groupLabel := canvas.NewText("URL", color.White)
-	var decodeURIItem, decodeURIInput = base.Item("decodeURI:")
-	var decodeURIComponentItem, decodeURIComponentInput = base.Item("decodeURIComponent:")
+	var decodeURIItem, decodeURIInput = base.Item("decodeURI:", "https%3A%2F%2Fexample.com%2F%3Fq%3Dgolang%26page%3D1")
+	var decodeURIComponentItem, decodeURIComponentInput = base.Item("decodeURIComponent:", "https%3A%2F%2Fexample.com%2F%3Fq%3Dgolang%26page%3D1")
 	grid := container.New(layout.NewGridLayout(3), decodeURIItem, decodeURIComponentItem)
 
 	boxUrl := container.NewVBox(line, groupLabel, grid)

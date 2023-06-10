@@ -9,6 +9,7 @@ require (
 )
 
 require (
+	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/emmansun/gmsm v0.17.3 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/golang-module/dongle v0.2.8 // indirect
